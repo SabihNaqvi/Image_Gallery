@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .center_div{
+            width: 100%;
+            display: flex;
+            overflow-y: hidden;
+            overflow-x: scroll;
+        }
+        .main_div{
+            width: 100vw;
+            height: 100vh;
+            background-color: hsl(225, 11%, 85%);
+            display: grid;
+            place-items: center;
+        }
+
+        img{
+            padding: 10px;
+            border-radius: 30px;
+            transition: transform 0.3s ease-in;
+        }
+
+        img:hover{
+            transform: scale(1.1);
+        }
+
+        .center_div::-webkit-scrollbar{
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div class="main_div">
+        <div class="center_div" id="centerdiv">
+
+        </div>
+    </div>
+    <script>
+
+        const centerdiv = document.getElementById("centerdiv");
+        fetch(`http://jsonplaceholder.typicode.com/photos?_limit=20`).then((apidata)=>{
+            return apidata.json()
+        }).then((finaldata)=>{
+            finaldata.map((val)=>{
+                key=val.id;
+                let img = document.createElement("img");
+                img.src=`https://picsum.photos/210/370?random=${key}`;
+                centerdiv.appendChild(img);
+                console.log(val.url);
+            }
+            )
+        }).catch((error)=>{
+            console.log(`The error is at ${error}`)
+        })
+    </script>
+</body>
+</html>
